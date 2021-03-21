@@ -1,0 +1,6 @@
+@media screen and (max-width: 468px) {
+  .promo-image {
+    max-width: 210px;
+    max-height: 206px;
+  }
+}

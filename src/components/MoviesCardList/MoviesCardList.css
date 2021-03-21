@@ -1,0 +1,17 @@
+.movies__list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 70px;
+}
+
+.movies__movie-item {
+  margin-bottom: 40px;
+}
+
+.movies__movie-item:last-child {
+  margin-bottom: 0;
+}
