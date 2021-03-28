@@ -1,32 +1,47 @@
+import firstImg from "../../images/first_img.png";
+import secondImg from "../../images/second_img.png";
+import thirdImg from "../../images/third_img.png";
+import fourImg from "../../images/four_img.png";
+import fiveImg from "../../images/five_img.png";
+import sixImg from "../../images/six_img.png";
+import sevenImg from "../../images/seven_img.png";
+
 const CARD_MOCK = [
   {
     id: "1",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "33 слова о дизайне",
+    img: firstImg,
   },
   {
     id: "2",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "Киноальманах «100 лет дизайна»",
+    img: secondImg,
   },
   {
     id: "3",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "В погоне за Бенкси",
+    img: thirdImg,
   },
   {
     id: "4",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "Баския: Взрыв реальности",
+    img: fourImg,
   },
   {
     id: "5",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "Бег это свобода",
+    img: fiveImg,
   },
   {
     id: "6",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "Бег это свобода",
+    img: sixImg,
   },
   {
     id: "7",
-    img: "https://images.unsplash.com/photo-1604776159603-cacfe8f4b46f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+    title: "Когда я думаю о Германии ночью",
+    img: sevenImg,
   },
-]
+];
 
 export default CARD_MOCK;

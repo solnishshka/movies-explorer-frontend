@@ -5,98 +5,6 @@
   margin: 0 auto;
 }
 
-.movies__search-container {
-  min-height: 222px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #424242;
-  margin-bottom: 10px;
-}
-
-.movies__search-form {
-  width: 100%;
-  background-color: #2F2F2F;
-  min-height: 72px;
-  border-radius: 9px;
-  border: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.movies__search-icon {
-  margin-left: 19px;
-  margin-right: 10px;
-  color: #C4C4C4;
-}
-
-.movies__search-input {
-  background-color: transparent;
-  border: none;
-  color: #8B8B8B;
-  height: 100%;
-  min-width: 726px;
-  position: relative;
-  padding-left: 10px;
-}
-
-.movies__search-input:focus {
-  outline: none;
-}
-
-.movies__search-button {
-  height: 34px;
-  width: 34px;
-  background-color: #4285F4;
-  border-radius: 48px;
-  border: none;
-  background-image: url('../../images/search-icon.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-right: 30px;
-  color: pointer;
-}
-
-.movies__search-filter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 167px;
-  min-height: 40px;
-  padding: 0 30px;
-  border-left: 1px solid #424242;
-}
-
-.movies__search-filter-description {
-  color: #FFF;
-  font-size: 13px;
-}
-
-.movies__search-filter-button {
-  width: 36px;
-  height: 20px;
-  border-radius: 20px;
-  background-color: #343434;
-  border: none;
-  position: relative;
-  padding: 0;
-}
-
-.movies__search-filter-toggler {
-  position: absolute;
-  right: 2px;
-  top: 2px;
-}
-
-.movies__search-filter-toggler_active {
-  left: 2px;
-}
-
-.movies__search-filter-toggler_active > circle:first-child {
-  fill: #A0A0A0;
-}
-
 .movies__more-button {
   min-width: 320px;
   background-color: inherit;
@@ -105,8 +13,33 @@
   margin: 50px auto 0;
   padding: 11px 0;
   display: block;
-  color: #FFF;
+  color: #fff;
   font-size: 12px;
   line-height: 1.33;
   font-weight: 500;
+  transition: opacity 1s linear;
+}
+
+.movies__more-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1023px) {
+  .movies {
+    width: calc(100% - 60px);
+    padding: 0 30px 80px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .movies {
+    width: calc(100% - 20px);
+    padding: 0 10px 80px;
+    min-width: 300px;
+  }
+
+  .movies__more-button {
+    min-width: 240px;
+  }
 }

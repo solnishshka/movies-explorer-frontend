@@ -1,0 +1,26 @@
+.form-button {
+  margin-top: auto;
+  height: 45px;
+  width: 396px;
+  background-color: #4285f4;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  transition: opacity 1s linear;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.21;
+}
+
+.form-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 550px) {
+  .form-button {
+    max-width: 260px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

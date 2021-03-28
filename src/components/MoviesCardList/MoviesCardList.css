@@ -15,3 +15,15 @@
 .movies__movie-item:last-child {
   margin-bottom: 0;
 }
+
+@media screen and (max-width: 1023px) {
+  .movies__list {
+    padding-top: 60px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .movies__list {
+    padding-top: 40px;
+  }
+}

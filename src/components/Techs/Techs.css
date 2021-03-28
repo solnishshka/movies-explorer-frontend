@@ -25,17 +25,20 @@
   background-color: #303030;
   border-radius: 10px;
   font-size: 14px;
+  line-height: 1.21;
   text-align: center;
 }
 
 @media screen and (max-width: 1024px) {
   .tech__text {
     font-size: 12px;
+    line-height: 1.5;
     margin-top: 22px;
   }
 
   .tech__list-item {
     font-size: 12px;
+    line-height: 1.25;
     padding: 21px 0;
     width: 84px;
   }

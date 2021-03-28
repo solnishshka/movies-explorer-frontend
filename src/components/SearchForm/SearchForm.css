@@ -1,0 +1,109 @@
+.search-form__wrapper {
+  min-height: 222px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #424242;
+  margin-bottom: 10px;
+}
+
+.search-form {
+  width: 100%;
+  min-height: 72px;
+  border: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.search-form__input-container {
+  width: calc(100% - 277px);
+  display: flex;
+  align-items: center;
+  padding: 19px;
+  padding-right: 30px;
+  padding-left: 63px;
+  background-color: #2f2f2f;
+  border-radius: 9px 0 0 9px;
+  background-image: url("../../images/search-icon-gray.svg");
+  background-repeat: no-repeat;
+  background-position: 25px 25px;
+}
+
+.search-form__icon {
+  color: #c4c4c4;
+  margin-right: 10px;
+}
+
+.search-form__input {
+  background-color: transparent;
+  border: none;
+  color: #8b8b8b;
+  height: 100%;
+  max-width: 730px;
+  width: 85%;
+  font-size: 18px;
+  line-height: 1.11;
+}
+
+.search-form__input:focus {
+  outline: none;
+}
+
+.search-form__search-button {
+  height: 34px;
+  width: 34px;
+  background-color: #4285f4;
+  border-radius: 48px;
+  border: none;
+  background-image: url("../../images/search-icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: auto;
+  cursor: pointer;
+  transition: opacity 1s linear;
+}
+
+.search-form__search-button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1023px) {
+  .search-form__input-container {
+    width: calc(100% - 290px);
+    padding: 19px;
+    padding-right: 0;
+    padding-left: 63px;
+  }
+  .search-form__input {
+    width: 75%;
+    max-width: 348px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .search-form__wrapper {
+    min-height: min-content;
+    padding-top: 80px;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .search-form__icon {
+    display: none;
+  }
+
+  .search-form__input-container {
+    width: 93%;
+    max-width: 262px;
+    padding: 19px;
+    border-radius: 9px;
+    background-image: none;
+  }
+
+  .search-form__input {
+    font-size: 14px;
+    line-height: 1.43;
+  }
+}
