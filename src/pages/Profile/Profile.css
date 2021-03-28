@@ -88,10 +88,6 @@
   opacity: 0.8;
 }
 
-.profile__save-button {
-  margin-top: 0;
-}
-
 .profile__form-error {
   margin-top: auto;
   font-size: 11px;
