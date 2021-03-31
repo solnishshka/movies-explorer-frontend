@@ -40,7 +40,8 @@
 }
 
 .movie__like-button,
-.movie__dislike-button {
+.movie__dislike-button,
+.movie__like-button-empty {
   background-image: url("../../images/like-button.svg");
   background-position: center;
   background-repeat: no-repeat;
@@ -54,6 +55,10 @@
 
 .movie__dislike-button {
   background-image: url("../../images/dislike-button.svg");
+}
+
+.movie__like-button-empty {
+  background-image: url("../../images/like-button-empty.svg");
 }
 
 .movie__like-button:focus,

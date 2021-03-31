@@ -10,7 +10,7 @@ const SearchForm = () => {
     <div className="search-form__wrapper">
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="search-form__input-container">
-          <input className="search-form__input" placeholder="Фильм"></input>
+          <input className="search-form__input" placeholder="Фильм" required></input>
           <button className="search-form__search-button" type="submit"></button>
         </div>
         <FilterCheckbox />
