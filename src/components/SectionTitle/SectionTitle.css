@@ -1,0 +1,58 @@
+.section-title {
+  margin: 0;
+  font-size: 50px;
+  line-height: 1.16;
+  font-weight: 400;
+  max-width: 600px;
+}
+
+.section-title_type_promo {
+  max-width: 640px;
+  margin-bottom: 36px;
+}
+
+.section-title_type_student {
+  margin-bottom: 18px;
+}
+
+@media screen and (max-width: 1200px) {
+  .section-title_type_promo {
+    text-align: center;
+    margin-top: 48px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .section-title {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .section-title_type_tech {
+    font-size: 50px;
+    line-height: 1.16;
+  }
+
+  .section-title_type_student {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section-title {
+    font-size: 30px;
+    line-height: 1;
+    max-width: 292px;
+  }
+
+  .section-title_type_student {
+    margin-bottom: 20px;
+  }
+
+  .section-title_type_promo {
+    max-width: 300px;
+    letter-spacing: -0.64px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
