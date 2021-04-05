@@ -16,6 +16,14 @@
   margin-bottom: 0;
 }
 
+.movies__not-found {
+  color: #FFF;
+  font-size: 14px;
+  line-height: 1.21;
+  max-width: 150px;
+  margin: 40px auto;
+}
+
 @media screen and (max-width: 1023px) {
   .movies__list {
     padding-top: 60px;

@@ -37,6 +37,19 @@
   border: 0;
 }
 
+.profile__input_type_error {
+  color: #ee3465;
+}
+
+.profile__input-error {
+  color: #ee3465;
+  font-size: 12px;
+  line-height: 1.21;
+  font-weight: 400;
+  margin-top: 5px;
+  align-self: flex-end;
+}
+
 .profile__label {
   color: #fff;
   font-size: 11px;
@@ -57,6 +70,16 @@
   outline: none;
 }
 
+.profile__cancel-button {
+  margin-top: 16px;
+  background-color: inherit;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  line-height: 1.23;
+  transition: opacity 1s linear;
+}
+
 .profile__edit-button {
   margin-top: auto;
   border: none;
@@ -64,7 +87,7 @@
   color: #fff;
   font-size: 13px;
   line-height: 1.23;
-  transition: opacity as linear;
+  transition: opacity 1s linear;
 }
 
 .profile__logout-button {
@@ -74,16 +97,18 @@
   color: #ee3465;
   font-size: 13px;
   line-height: 1.23;
-  transition: opacity as linear;
+  transition: opacity 1s linear;
 }
 
 .profile__edit-button:focus,
-.profile__logout-button:focus {
+.profile__logout-button:focus,
+.profile__cancel-button:focus {
   outline: none;
 }
 
 .profile__edit-button:hover,
-.profile__logout-button:hover {
+.profile__logout-button:hover,
+.profile__cancel-button:hover {
   cursor: pointer;
   opacity: 0.8;
 }

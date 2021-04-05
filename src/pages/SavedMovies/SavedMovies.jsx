@@ -1,14 +1,30 @@
-import React from "react";
-import "./SavedMovies.css";
+import React, { useState } from "react";
+
 import MoviesCardList from "../../components/MoviesCardList";
-import CARD_MOCK from "./mock";
 import SearchForm from "../../components/SearchForm";
 
-const SavedMovies = () => {
+import { moviesFinder } from "../../utils/moviesFinder";
+
+import "./SavedMovies.css";
+
+const SavedMovies = ({ savedMovies, handleDeleteMovie }) => {
+  const [result, setResult] = useState(savedMovies);
+  const [isSearched, setIsSearched] = useState(false);
+
+  const handleSearch = (request, isShort) => {
+    setIsSearched(true);
+    setResult(moviesFinder(savedMovies, request, isShort));
+  };
+
   return (
     <div className="saved-movies">
-      <SearchForm />
-      <MoviesCardList cards={CARD_MOCK} type="saved" />
+      <SearchForm onSearch={handleSearch} />
+      <MoviesCardList
+        movies={result.length ? result : isSearched ? result : savedMovies}
+        handleDeleteMovie={handleDeleteMovie}
+        countMovie={savedMovies.length}
+        isSearched={isSearched}
+      />
     </div>
   );
 };
