@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useWindowResize from "../../utils/useWindowResize";
 
 import MoviesCardList from "../../components/MoviesCardList";
 import SearchForm from "../../components/SearchForm";
 import Preloader from "../../components/Preloader";
 
-import { moviesFinder } from "../../utils/moviesFinder";
+import moviesFinder from "../../utils/moviesFinder";
 
 import "./Movies.css";
 
@@ -16,18 +17,31 @@ const Movies = ({
   handleDeleteMovie,
   isLoading,
 }) => {
-  const [countMovie, setCountMovie] = useState(7);
-  const [result, setResult] = useState(movies);
+  const isWindowSize = useWindowResize();
+  const [baseCountMovies, setBaseCountMovies] = useState(7);
+  const [moreCountMovies, setMoreCountMovies] = useState(0);
+  const [result, setResult] = useState(movies ?? []);
   const [isSearched, setIsSearched] = useState(false);
 
+  useEffect(() => {
+    if (isWindowSize === "big") {
+      setBaseCountMovies(7);
+    } else {
+      setBaseCountMovies(5);
+    }
+  }, [isWindowSize]);
+
   const handleMoreButtonClick = () => {
-    setCountMovie((prevState) => prevState + 2);
+    setMoreCountMovies((prevState) => prevState + 2);
   };
 
   const handleSearch = (request, isShort) => {
     setIsSearched(true);
-    onSearch();
-    setResult(moviesFinder(movies, request, isShort));
+    if (movies.length === 0) {
+      onSearch(request, isShort, setResult);
+    } else {
+      setResult(moviesFinder(movies, request, isShort));
+    }
   };
 
   return (
@@ -39,13 +53,13 @@ const Movies = ({
           movies={result}
           savedMovies={savedMovies}
           type="movie"
-          countMovie={countMovie}
+          countMovies={baseCountMovies + moreCountMovies}
           handleAddNewMovie={handleAddNewMovie}
           handleDeleteMovie={handleDeleteMovie}
           isSearched={isSearched}
         />
       )}
-      {countMovie < result.length && (
+      {baseCountMovies + moreCountMovies < result.length && (
         <button className="movies__more-button" onClick={handleMoreButtonClick}>
           Ещё
         </button>

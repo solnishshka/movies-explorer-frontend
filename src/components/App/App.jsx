@@ -13,6 +13,7 @@ import Movies from "../../pages/Movies";
 import SavedMovies from "../../pages/SavedMovies";
 import PageNotFound from "../../pages/PageNotFound";
 import ProtectedRoute from "../ProtectedRoute";
+import InfoTooltipPopup from "../InfoTooltipPopup";
 
 import routes from "../../config/routes";
 
@@ -30,18 +31,24 @@ import {
 import { getMovies } from "../../utils/MoviesApi";
 
 import moviesMapper from "../../utils/moviesMapper";
+import moviesFinder from "../../utils/moviesFinder";
 
 import "./App.css";
 
 function App() {
   const history = useHistory();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(
+    Boolean(localStorage.getItem("loggedIn")) ?? false
+  );
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   );
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessProfileUpdate, setIsSuccessProfileUpdate] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
+  const [isInfoTooltipPopupMessage, setIsTooltipPopupMessage] = useState("");
 
   const handleTokenCheck = () => {
     if (localStorage.getItem("jwt")) {
@@ -51,6 +58,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+            localStorage.setItem("loggedIn", true);
           }
         })
         .catch((err) => {
@@ -64,24 +72,35 @@ function App() {
       .then((result) => {
         if (result) {
           history.push("/signin");
+          setIsTooltipPopupOpen(true);
+          setIsTooltipPopupMessage("Вы успешно зарегистрированы!");
         }
       })
       .catch((err) => {
-        console.log(err);
+        setIsTooltipPopupOpen(true);
+        setIsTooltipPopupMessage(err.message);
+        console.log(err.status);
       });
   };
 
-  const handleLogin = (email, password) => {
+  const handleLogin = async (email, password) => {
     login(email, password)
       .then((res) => {
         if (res) {
           setLoggedIn(true);
+          localStorage.setItem("loggedIn", true);
           localStorage.setItem("jwt", res.token);
           history.push("/movies");
         }
       })
       .catch((err) => {
         console.log(err);
+        setIsTooltipPopupOpen(true);
+        setIsTooltipPopupMessage(err.message);
+      })
+      .finally(() => {
+        handleGetSavedMovies();
+        handleGetUserInfo();
       });
   };
 
@@ -90,9 +109,14 @@ function App() {
       .then((res) => {
         if (res) {
           setCurrentUser({ name: res.name, email: res.email });
+          setIsSuccessProfileUpdate(true);
+          setIsTooltipPopupOpen(true);
+          setIsTooltipPopupMessage("Данные успешно обновлены!");
         }
       })
       .catch((err) => {
+        setIsTooltipPopupOpen(true);
+        setIsTooltipPopupMessage(err.message);
         console.log(err);
       });
   };
@@ -106,24 +130,33 @@ function App() {
     history.push("/signin");
   };
 
-  const handleGetMovies = () => {
-    if (!localStorage.getItem("movies")) {
-      setIsLoading(true);
-      getMovies()
-        .then((res) => {
-          if (res) {
-            const moviesEntities = moviesMapper(res);
-            localStorage.setItem("movies", JSON.stringify(moviesEntities));
-            setMovies(moviesEntities);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+  const handleGetUserInfo = () => {
+    getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGetMovies = (request, isShort, setResult) => {
+    setIsLoading(true);
+    getMovies()
+      .then((res) => {
+        if (res) {
+          const moviesEntities = moviesMapper(res);
+          localStorage.setItem("movies", JSON.stringify(moviesEntities));
+          setMovies(moviesEntities);
+          setResult(moviesFinder(moviesEntities, request, isShort));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleGetSavedMovies = () => {
@@ -167,21 +200,38 @@ function App() {
   }, []);
 
   useEffect(() => {
-    handleGetSavedMovies();
+    if (loggedIn) {
+      handleGetSavedMovies();
+    }
   }, []);
 
   useEffect(() => {
-    getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (loggedIn) {
+      handleGetUserInfo();
+    }
   }, []);
 
+  useEffect(() => {
+    setMovies(JSON.parse(localStorage.getItem("movies")));
+  }, []);
+
+  function handleOvelayOrCrossClose(evt) {
+    if (
+      evt.target.classList.contains("popup") ||
+      evt.target.classList.contains("popup__close-button")
+    ) {
+      setIsTooltipPopupOpen(false);
+    }
+  }
+
+  const handleEscClose = (evt) => {
+    if (evt.key === "Escape") {
+      setIsTooltipPopupOpen(false);
+    }
+  };
+
   return (
-    <div className="App">
+    <div className="App" onKeyUp={handleEscClose}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
           <Switch>
@@ -201,7 +251,7 @@ function App() {
                 movies={movies}
                 savedMovies={savedMovies}
                 isLoading={isLoading}
-                loggedIn
+                loggedIn={loggedIn}
               />
               <Footer />
             </Route>
@@ -212,7 +262,7 @@ function App() {
                 component={SavedMovies}
                 savedMovies={savedMovies}
                 handleDeleteMovie={handleDeleteMovie}
-                loggedIn
+                loggedIn={loggedIn}
               />
               <Footer />
             </Route>
@@ -223,7 +273,7 @@ function App() {
                 component={Profile}
                 handleProfileUpdate={handleProfileUpdate}
                 handleLogout={handleLogout}
-                loggedIn
+                loggedIn={loggedIn}
               />
             </Route>
             <Route path={routes.SIGNUP}>
@@ -236,6 +286,12 @@ function App() {
               <PageNotFound />
             </Route>
           </Switch>
+          <InfoTooltipPopup
+            success={isSuccessProfileUpdate}
+            isOpen={isInfoTooltipPopupOpen}
+            onClose={handleOvelayOrCrossClose}
+            message={isInfoTooltipPopupMessage}
+          />
         </div>
       </CurrentUserContext.Provider>
     </div>

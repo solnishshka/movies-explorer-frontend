@@ -19,7 +19,8 @@ const MoviesCard = ({
     }
   }, [savedMovies, movie, type]);
 
-  const handleClick = () => {
+  const handleLikeButtonClick = (evt) => {
+    evt.stopPropagation();
     if (id) {
       handleDeleteMovie(id);
     } else {
@@ -27,28 +28,29 @@ const MoviesCard = ({
     }
   };
 
+  const handleClick = () => {
+    window.open(movie.trailer);
+  };
+
   return (
-    <div
-      className="movie"
-      href={movie.trailerLink}
-      target="_blank"
-      rel="noreferrer"
-    >
+    <div className="movie" onClick={handleClick}>
       <div className="movie__info">
         <div className="movie__description">
           <h2 className="movie__title">{movie.nameRU}</h2>
           <p className="movie__duration">{duration}</p>
         </div>
-        <button
-          onClick={handleClick}
-          className={
-            type === "movie"
-              ? id
-                ? "movie__like-button"
-                : "movie__like-button-empty"
-              : "movie__dislike-button"
-          }
-        ></button>
+        <object>
+          <button
+            onClick={handleLikeButtonClick}
+            className={
+              type === "movie"
+                ? id
+                  ? "movie__like-button"
+                  : "movie__like-button-empty"
+                : "movie__dislike-button"
+            }
+          ></button>
+        </object>
       </div>
       <img className="movie__image" src={movie.image} alt={movie.nameRU}></img>
     </div>

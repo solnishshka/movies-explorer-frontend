@@ -1,5 +1,13 @@
 const movieMatcher = (movie, request, isShort) => {
-  const { country, director, nameEN, nameRU, description, year, duration } = movie;
+  const {
+    country,
+    director,
+    nameEN,
+    nameRU,
+    description,
+    year,
+    duration,
+  } = movie;
   if (isShort) {
     if (duration > 40) {
       return false;
@@ -27,7 +35,9 @@ const movieMatcher = (movie, request, isShort) => {
 };
 
 const moviesFinder = (movies, request, isShort) => {
-  return movies.filter((movie) => movieMatcher(movie, request.toLowerCase(), isShort));
+  return movies.filter((movie) =>
+    movieMatcher(movie, request.toLowerCase(), isShort)
+  );
 };
 
-export { moviesFinder };
+export default moviesFinder;

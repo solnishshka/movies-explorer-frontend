@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MoviesCardList from "../../components/MoviesCardList";
 import SearchForm from "../../components/SearchForm";
 
-import { moviesFinder } from "../../utils/moviesFinder";
+import moviesFinder from "../../utils/moviesFinder";
 
 import "./SavedMovies.css";
 
@@ -22,7 +22,7 @@ const SavedMovies = ({ savedMovies, handleDeleteMovie }) => {
       <MoviesCardList
         movies={result.length ? result : isSearched ? result : savedMovies}
         handleDeleteMovie={handleDeleteMovie}
-        countMovie={savedMovies.length}
+        countMovies={savedMovies.length}
         isSearched={isSearched}
       />
     </div>

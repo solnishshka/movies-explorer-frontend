@@ -8,11 +8,12 @@ const MoviesCardList = ({
   movies,
   savedMovies,
   type,
-  countMovie,
+  countMovies,
   handleAddNewMovie,
   handleDeleteMovie,
-  isSearched,
+  isSearched
 }) => {
+
   if (!movies.length && isSearched) {
     return <div className="movies__not-found">Ничего не найдено</div>;
   }
@@ -22,7 +23,7 @@ const MoviesCardList = ({
   return (
     <ul className="movies__list">
       {movies
-        .filter((item, id) => id < countMovie)
+        .filter((item, id) => id < countMovies)
         .map((movie) => (
           <li className="movies__movie-item" key={movie.movieId}>
             <MoviesCard

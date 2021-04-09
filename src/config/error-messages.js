@@ -19,6 +19,7 @@ const updateProfileErrors = {
 const defaultErrors = {
   500: "На сервере произошла ошибка.",
   404: "Страница по указанному маршруту не найдена.",
+  default: "Что-то пошло не так.",
 };
 
 const validationErrors = {

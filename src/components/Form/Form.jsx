@@ -50,8 +50,6 @@ const Form = ({ type, title, link, linkTitle, text, onRegister, onLogin }) => {
 
   const { name, email, password } = formValues;
 
-  console.log(isValidationStart);
-
   useEffect(() => {
     const nameIsValid = inputValidator(name, "name", isValidationStart.name);
     const emailIsValid = inputValidator(
