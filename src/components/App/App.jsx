@@ -14,6 +14,7 @@ import SavedMovies from "../../pages/SavedMovies";
 import PageNotFound from "../../pages/PageNotFound";
 import ProtectedRoute from "../ProtectedRoute";
 import InfoTooltipPopup from "../InfoTooltipPopup";
+import Preloader from "../Preloader";
 
 import routes from "../../config/routes";
 
@@ -37,9 +38,8 @@ import "./App.css";
 
 function App() {
   const history = useHistory();
-  const [loggedIn, setLoggedIn] = useState(
-    Boolean(localStorage.getItem("loggedIn")) ?? false
-  );
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isTokenChecked, setIsTokenChecked] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
@@ -58,11 +58,15 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            localStorage.setItem("loggedIn", true);
           }
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsTokenChecked(true);
+          handleGetSavedMovies();
+          handleGetUserInfo();
         });
     }
   };
@@ -89,7 +93,6 @@ function App() {
       .then((res) => {
         if (res) {
           setLoggedIn(true);
-          localStorage.setItem("loggedIn", true);
           localStorage.setItem("jwt", res.token);
           history.push("/movies");
         }
@@ -186,8 +189,10 @@ function App() {
     deleteMovie(id)
       .then((res) => {
         if (res) {
-          setSavedMovies((prevState) =>
-            prevState.filter((movie) => movie._id !== id)
+          setSavedMovies(
+            savedMovies.filter((movie) => {
+              return movie._id !== id;
+            })
           );
         }
       })
@@ -198,18 +203,6 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      handleGetSavedMovies();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      handleGetUserInfo();
-    }
   }, []);
 
   useEffect(() => {
@@ -231,62 +224,69 @@ function App() {
     }
   };
 
+  if (!isTokenChecked && !loggedIn) {
+    return <Preloader />;
+  }
+
   return (
     <div className="App" onKeyUp={handleEscClose}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-          <Switch>
-            <Route exact path={routes.HOME}>
-              <Header auth={loggedIn} />
-              <Main />
-              <Footer />
-            </Route>
-            <Route path={routes.MOVIES}>
-              <Header type="dark" auth={loggedIn} />
-              <ProtectedRoute
-                path={routes.MOVIES}
-                component={Movies}
-                onSearch={handleGetMovies}
-                handleAddNewMovie={handleAddNewMovie}
-                handleDeleteMovie={handleDeleteMovie}
-                movies={movies}
-                savedMovies={savedMovies}
-                isLoading={isLoading}
-                loggedIn={loggedIn}
-              />
-              <Footer />
-            </Route>
-            <Route path={routes.SAVED_MOVIES}>
-              <Header type="dark" auth={loggedIn} />
-              <ProtectedRoute
-                path={routes.SAVED_MOVIES}
-                component={SavedMovies}
-                savedMovies={savedMovies}
-                handleDeleteMovie={handleDeleteMovie}
-                loggedIn={loggedIn}
-              />
-              <Footer />
-            </Route>
-            <Route path={routes.PROFILE}>
-              <Header type="dark" auth={loggedIn} />
-              <ProtectedRoute
-                path={routes.PROFILE}
-                component={Profile}
-                handleProfileUpdate={handleProfileUpdate}
-                handleLogout={handleLogout}
-                loggedIn={loggedIn}
-              />
-            </Route>
-            <Route path={routes.SIGNUP}>
-              <Register handleRegister={handleRegister} />
-            </Route>
-            <Route path={routes.SIGNIN}>
-              <Login handleLogin={handleLogin} />
-            </Route>
-            <Route path="*">
-              <PageNotFound />
-            </Route>
-          </Switch>
+          {!isTokenChecked && <Preloader />}
+          {isTokenChecked && (
+            <Switch>
+              <Route exact path={routes.HOME}>
+                <Header auth={loggedIn} />
+                <Main />
+                <Footer />
+              </Route>
+              <Route path={routes.MOVIES}>
+                <Header type="dark" auth={loggedIn} />
+                <ProtectedRoute
+                  path={routes.MOVIES}
+                  component={Movies}
+                  onSearch={handleGetMovies}
+                  handleAddNewMovie={handleAddNewMovie}
+                  handleDeleteMovie={handleDeleteMovie}
+                  movies={movies}
+                  savedMovies={savedMovies}
+                  isLoading={isLoading}
+                  loggedIn={loggedIn}
+                />
+                <Footer />
+              </Route>
+              <Route path={routes.SAVED_MOVIES}>
+                <Header type="dark" auth={loggedIn} />
+                <ProtectedRoute
+                  path={routes.SAVED_MOVIES}
+                  component={SavedMovies}
+                  savedMovies={savedMovies}
+                  handleDeleteMovie={handleDeleteMovie}
+                  loggedIn={loggedIn}
+                />
+                <Footer />
+              </Route>
+              <Route path={routes.PROFILE}>
+                <Header type="dark" auth={loggedIn} />
+                <ProtectedRoute
+                  path={routes.PROFILE}
+                  component={Profile}
+                  handleProfileUpdate={handleProfileUpdate}
+                  handleLogout={handleLogout}
+                  loggedIn={loggedIn}
+                />
+              </Route>
+              <Route path={routes.SIGNUP}>
+                <Register handleRegister={handleRegister} />
+              </Route>
+              <Route path={routes.SIGNIN}>
+                <Login handleLogin={handleLogin} />
+              </Route>
+              <Route path="*">
+                <PageNotFound />
+              </Route>
+            </Switch>
+          )}
           <InfoTooltipPopup
             success={isSuccessRequest}
             isOpen={isInfoTooltipPopupOpen}

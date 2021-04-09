@@ -6,6 +6,7 @@ import SearchForm from "../../components/SearchForm";
 import Preloader from "../../components/Preloader";
 
 import moviesFinder from "../../utils/moviesFinder";
+import { BASE_COUNT_MOVIES, MORE_COUNT_MOVIES } from '../../config/const';
 
 import "./Movies.css";
 
@@ -18,26 +19,26 @@ const Movies = ({
   isLoading,
 }) => {
   const isWindowSize = useWindowResize();
-  const [baseCountMovies, setBaseCountMovies] = useState(7);
+  const [baseCountMovies, setBaseCountMovies] = useState(BASE_COUNT_MOVIES.big);
   const [moreCountMovies, setMoreCountMovies] = useState(0);
   const [result, setResult] = useState(movies ?? []);
   const [isSearched, setIsSearched] = useState(false);
 
   useEffect(() => {
     if (isWindowSize === "big") {
-      setBaseCountMovies(7);
+      setBaseCountMovies(BASE_COUNT_MOVIES.big);
     } else {
-      setBaseCountMovies(5);
+      setBaseCountMovies(BASE_COUNT_MOVIES.small);
     }
   }, [isWindowSize]);
 
   const handleMoreButtonClick = () => {
-    setMoreCountMovies((prevState) => prevState + 2);
+    setMoreCountMovies((prevState) => prevState + MORE_COUNT_MOVIES);
   };
 
   const handleSearch = (request, isShort) => {
     setIsSearched(true);
-    if (!movies) {
+    if (!movies || !movies.length) {
       onSearch(request, isShort, setResult);
     } else {
       setResult(moviesFinder(movies, request, isShort));

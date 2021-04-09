@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useWindowResize = () => {
-  const [isWindowSize, setisWindowSize] = useState(window.innerWidth > 480 ? "big" : "small");
+  const [isWindowSize, setisWindowSize] = useState(
+    window.innerWidth > 480 ? "big" : "small"
+  );
 
   const handleResize = () => {
-    if (window.innerWidth < 480) {
+    if (window.innerWidth < 481) {
       setisWindowSize("small");
     } else setisWindowSize("big");
   };
 
-  window.addEventListener("resize", () => {
-    setTimeout(handleResize, 1000);
+  const handleTimeoutResize = () => {
+    setTimeout(handleResize, 500);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleTimeoutResize);
+    return () => {
+      window.removeEventListener("resize", handleTimeoutResize);
+    };
   });
 
   return isWindowSize;

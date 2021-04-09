@@ -20,7 +20,7 @@ const SavedMovies = ({ savedMovies, handleDeleteMovie }) => {
     <div className="saved-movies">
       <SearchForm onSearch={handleSearch} />
       <MoviesCardList
-        movies={result.length ? result : isSearched ? result : savedMovies}
+        movies={isSearched ? result : savedMovies}
         handleDeleteMovie={handleDeleteMovie}
         countMovies={savedMovies.length}
         isSearched={isSearched}

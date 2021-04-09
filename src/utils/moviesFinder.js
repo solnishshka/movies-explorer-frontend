@@ -1,3 +1,5 @@
+import { SHORT_VIDEO_SIZE } from '../config/const';
+
 const movieMatcher = (movie, request, isShort) => {
   const {
     country,
@@ -9,7 +11,7 @@ const movieMatcher = (movie, request, isShort) => {
     duration,
   } = movie;
   if (isShort) {
-    if (duration > 40) {
+    if (duration > SHORT_VIDEO_SIZE) {
       return false;
     }
   }

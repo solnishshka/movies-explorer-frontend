@@ -10,7 +10,6 @@ import "./Profile.css";
 
 const Profile = ({ handleProfileUpdate, handleLogout }) => {
   const currentUser = useContext(CurrentUserContext);
-  const error = "";
   const [isEdit, setIsEdit] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
@@ -150,9 +149,6 @@ const Profile = ({ handleProfileUpdate, handleLogout }) => {
           <span className="profile__input-error" id="name-error">
             {validationErrors.email}
           </span>
-        )}
-        {isEdit && error && (
-          <span className="profile__form-error">{error}</span>
         )}
         {isEdit && (
           <>
