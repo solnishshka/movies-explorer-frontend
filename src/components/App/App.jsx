@@ -51,25 +51,21 @@ function App() {
   const [isInfoTooltipPopupMessage, setIsTooltipPopupMessage] = useState("");
 
   const handleTokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      const token = localStorage.getItem("jwt");
-
-      checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsTokenChecked(true);
-        })
-        .finally(() => {
-          setIsTokenChecked(true);
-          handleGetSavedMovies();
-          handleGetUserInfo();
-        });
-    }
+    const token = localStorage.getItem("jwt");
+    checkToken(token)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsTokenChecked(true);
+        handleGetSavedMovies();
+        handleGetUserInfo();
+      });
   };
 
   const handleRegister = (name, email, password) => {
