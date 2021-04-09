@@ -62,6 +62,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          setIsTokenChecked(true);
         })
         .finally(() => {
           setIsTokenChecked(true);
