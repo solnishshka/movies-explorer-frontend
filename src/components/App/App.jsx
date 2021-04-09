@@ -46,7 +46,7 @@ function App() {
   );
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccessProfileUpdate, setIsSuccessProfileUpdate] = useState(false);
+  const [isSuccessRequest, setIsSuccessRequest] = useState(false);
   const [isInfoTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
   const [isInfoTooltipPopupMessage, setIsTooltipPopupMessage] = useState("");
 
@@ -72,6 +72,7 @@ function App() {
       .then((result) => {
         if (result) {
           history.push("/signin");
+          setIsSuccessRequest(true);
           setIsTooltipPopupOpen(true);
           setIsTooltipPopupMessage("Вы успешно зарегистрированы!");
         }
@@ -109,7 +110,7 @@ function App() {
       .then((res) => {
         if (res) {
           setCurrentUser({ name: res.name, email: res.email });
-          setIsSuccessProfileUpdate(true);
+          setIsSuccessRequest(true);
           setIsTooltipPopupOpen(true);
           setIsTooltipPopupMessage("Данные успешно обновлены!");
         }
@@ -287,7 +288,7 @@ function App() {
             </Route>
           </Switch>
           <InfoTooltipPopup
-            success={isSuccessProfileUpdate}
+            success={isSuccessRequest}
             isOpen={isInfoTooltipPopupOpen}
             onClose={handleOvelayOrCrossClose}
             message={isInfoTooltipPopupMessage}
