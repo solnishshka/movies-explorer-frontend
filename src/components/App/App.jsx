@@ -224,10 +224,6 @@ function App() {
     }
   };
 
-  if (!isTokenChecked && !loggedIn) {
-    return <Preloader />;
-  }
-
   return (
     <div className="App" onKeyUp={handleEscClose}>
       <CurrentUserContext.Provider value={currentUser}>
