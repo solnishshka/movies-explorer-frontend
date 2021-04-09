@@ -37,7 +37,7 @@ const Movies = ({
 
   const handleSearch = (request, isShort) => {
     setIsSearched(true);
-    if (movies.length === 0) {
+    if (!movies) {
       onSearch(request, isShort, setResult);
     } else {
       setResult(moviesFinder(movies, request, isShort));
