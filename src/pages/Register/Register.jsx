@@ -4,7 +4,7 @@ import "./Register.css";
 
 import Form from "../../components/Form";
 
-const Register = () => {
+const Register = ({ handleRegister }) => {
   return (
     <div className="register">
       <Form
@@ -13,6 +13,8 @@ const Register = () => {
         text="Уже зарегистрированы?"
         link="/signin"
         linkTitle="Войти"
+        onRegister={handleRegister}
+
       />
     </div>
   );

@@ -3,14 +3,12 @@ import Logo from "../Logo";
 import Navigation from "../Navigation";
 import "./Header.css";
 
-const Header = ({ type, auth = true }) => {
+const Header = ({ type, auth = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  console.log(isMenuOpen);
 
   return (
     <header className={type ? `header header_type_${type}` : "header"}>

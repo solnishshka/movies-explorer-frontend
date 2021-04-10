@@ -19,6 +19,16 @@ const updateProfileErrors = {
 const defaultErrors = {
   500: "На сервере произошла ошибка.",
   404: "Страница по указанному маршруту не найдена.",
+  default: "Что-то пошло не так.",
 };
 
-export { loginErrors, registerErrors, updateProfileErrors, defaultErrors };
+const validationErrors = {
+  required: "Поле обязательно для заполнения",
+  email: "Невалидный email",
+  name: "Имя содержит недопустимые символы",
+  minLength: "Поле должно содержать не менее 2 символов",
+  maxLength: "Поле должно содержать не более 30 символов",
+  minLength8: "Поле должно содержать не менее 8 символов",
+}
+
+export { loginErrors, registerErrors, updateProfileErrors, defaultErrors, validationErrors };

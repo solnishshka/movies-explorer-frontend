@@ -17,6 +17,11 @@
   cursor: pointer;
 }
 
+.form-button_disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
+}
+
 @media screen and (max-width: 550px) {
   .form-button {
     max-width: 260px;

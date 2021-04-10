@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
+import { inputValidator } from "../../utils/validators";
+import { validationErrors } from "../../config/error-messages";
 
 import FormButton from "../FormButton";
 import Logo from "../Logo";
@@ -6,9 +9,100 @@ import { Link } from "react-router-dom";
 
 import "./Form.css";
 
-const Form = ({ type, title, link, linkTitle, text }) => {
+const Form = ({ type, title, link, linkTitle, text, onRegister, onLogin }) => {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    name: {
+      required: true,
+      minLength: true,
+      maxLength: true,
+      containSymbols: true,
+    },
+    email: {
+      required: true,
+      invalidEmail: true,
+    },
+    password: {
+      required: true,
+      minLength: true,
+      maxLength: true,
+    },
+  });
+  const [isValidationStart, setIsValidationStart] = useState({
+    name: type === "signup" ? false : true,
+    email: false,
+    password: false,
+  });
+
+  const handleChange = useCallback(
+    (evt) => {
+      const { name, value } = evt.target;
+
+      setFormValues((prevState) => ({ ...prevState, [name]: value }));
+      setIsValidationStart((prevState) => ({ ...prevState, [name]: true }));
+    },
+    [setFormValues, setIsValidationStart]
+  );
+
+  const { name, email, password } = formValues;
+
+  useEffect(() => {
+    const nameIsValid = inputValidator(name, "name", isValidationStart.name);
+    const emailIsValid = inputValidator(
+      email,
+      "email",
+      isValidationStart.email
+    );
+    const passwordIsValid = inputValidator(
+      password,
+      "password",
+      isValidationStart.password
+    );
+
+    setErrors({
+      name: nameIsValid,
+      email: emailIsValid,
+      password: passwordIsValid,
+    });
+  }, [
+    name,
+    email,
+    password,
+    setErrors,
+    isValidationStart.email,
+    isValidationStart.name,
+    isValidationStart.password,
+  ]);
+
+  const nameInvalid =
+    Boolean(type === "signup") && Object.values(errors.name).some(Boolean);
+  const emailInvalid = Object.values(errors.email).some(Boolean);
+  const passwordInvalid = Object.values(errors.password).some(Boolean);
+
+  const isDisabled =
+    nameInvalid ||
+    emailInvalid ||
+    passwordInvalid ||
+    !isValidationStart.name ||
+    !isValidationStart.email ||
+    !isValidationStart.password;
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    if (onRegister) {
+      onRegister(name, email, password);
+    } else if (onLogin) {
+      onLogin(email, password);
+    }
+  };
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <Link to="/">
         <Logo className="form__logo" />
       </Link>
@@ -23,8 +117,28 @@ const Form = ({ type, title, link, linkTitle, text }) => {
             type="text"
             name="name"
             id="name"
+            onChange={handleChange}
           />
-          <span className="form__input-error" id="name-error"></span>
+          {errors.name.required && (
+            <span className="form__input-error" id="name-error">
+              {validationErrors.required}
+            </span>
+          )}
+          {errors.name.containSymbols && (
+            <span className="form__input-error" id="name-error">
+              {validationErrors.name}
+            </span>
+          )}
+          {errors.name.minLength && (
+            <span className="form__input-error" id="name-error">
+              {validationErrors.minLength}
+            </span>
+          )}
+          {errors.name.maxLength && (
+            <span className="form__input-error" id="name-error">
+              {validationErrors.maxLength}
+            </span>
+          )}
         </>
       )}
       <label className="form__label" htmlFor="email">
@@ -35,8 +149,18 @@ const Form = ({ type, title, link, linkTitle, text }) => {
         type="email"
         name="email"
         id="email"
+        onChange={handleChange}
       />
-      <span className="form__input-error" id="email-error"></span>
+      {errors.email.required && (
+        <span className="form__input-error" id="name-error">
+          {validationErrors.required}
+        </span>
+      )}
+      {errors.email.invalidEmail && (
+        <span className="form__input-error" id="name-error">
+          {validationErrors.email}
+        </span>
+      )}
       <label className="form__label" htmlFor="password">
         Пароль
       </label>
@@ -45,13 +169,27 @@ const Form = ({ type, title, link, linkTitle, text }) => {
         type="password"
         name="password"
         id="password"
+        onChange={handleChange}
       />
-      <span className="form__input-error" id="password-error"></span>
-      {type === "signup" ? (
-        <FormButton title="Зарегистрироваться" />
-      ) : (
-        <FormButton title="Войти" />
+      {errors.password.required && (
+        <span className="form__input-error" id="name-error">
+          {validationErrors.required}
+        </span>
       )}
+      {errors.password.minLength && (
+        <span className="form__input-error" id="name-error">
+          {validationErrors.minLength8}
+        </span>
+      )}
+      {errors.password.maxLength && (
+        <span className="form__input-error" id="name-error">
+          {validationErrors.maxLength}
+        </span>
+      )}
+      <FormButton
+        title={type === "signup" ? "Зарегистрироваться" : "Войти"}
+        disabled={isDisabled}
+      />
       <p className="form__text">
         {text}
         <Link className="form__link" to={link}>

@@ -4,7 +4,7 @@ import "./Login.css";
 
 import Form from "../../components/Form";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   return (
     <div className="login">
       <Form
@@ -13,6 +13,7 @@ const Login = () => {
         text="Ещё не зарегистрированы?"
         link="/signup"
         linkTitle="Регистрация"
+        onLogin = {handleLogin}
       />
     </div>
   );

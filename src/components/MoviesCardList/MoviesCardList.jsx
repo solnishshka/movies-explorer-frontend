@@ -4,14 +4,37 @@ import "./MoviesCardList.css";
 
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-const MoviesCardList = ({ cards, type }) => {
+const MoviesCardList = ({
+  movies,
+  savedMovies,
+  type,
+  countMovies,
+  handleAddNewMovie,
+  handleDeleteMovie,
+  isSearched
+}) => {
+
+  if (!movies.length && isSearched) {
+    return <div className="movies__not-found">Ничего не найдено</div>;
+  }
+  if (!movies.length) {
+    return "";
+  }
   return (
     <ul className="movies__list">
-      {cards.map((movie) => (
-        <li className="movies__movie-item" key={movie.id}>
-          <MoviesCard img={movie.img} title={movie.title} type={type} />
-        </li>
-      ))}
+      {movies
+        .filter((item, id) => id < countMovies)
+        .map((movie) => (
+          <li className="movies__movie-item" key={movie.movieId}>
+            <MoviesCard
+              movie={movie}
+              savedMovies={savedMovies}
+              type={type}
+              handleAddNewMovie={handleAddNewMovie}
+              handleDeleteMovie={handleDeleteMovie}
+            />
+          </li>
+        ))}
     </ul>
   );
 };

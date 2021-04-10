@@ -27,6 +27,7 @@
   background-image: url("../../images/search-icon-gray.svg");
   background-repeat: no-repeat;
   background-position: 25px 25px;
+  position: relative;
 }
 
 .search-form__icon {
@@ -67,6 +68,15 @@
   opacity: 0.8;
 }
 
+.search-form__error {
+  position: absolute;
+  bottom: -20px;
+  left: 5px;
+  font-size: 13px;
+  line-height: 1.23;
+  color: #ee3465;
+}
+
 @media screen and (max-width: 1023px) {
   .search-form__input-container {
     width: calc(100% - 290px);
@@ -95,8 +105,7 @@
   }
 
   .search-form__input-container {
-    width: 93%;
-    max-width: 262px;
+    width: 87%;
     padding: 19px;
     border-radius: 9px;
     background-image: none;

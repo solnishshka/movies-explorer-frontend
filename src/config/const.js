@@ -1,0 +1,10 @@
+const SHORT_VIDEO_SIZE = 40;
+
+const BASE_COUNT_MOVIES = {
+  small: 5,
+  big: 7,
+}
+
+const MORE_COUNT_MOVIES = 2;
+
+export { SHORT_VIDEO_SIZE, BASE_COUNT_MOVIES, MORE_COUNT_MOVIES };

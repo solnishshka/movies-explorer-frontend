@@ -3,9 +3,15 @@
   min-height: 122px;
   display: flex;
   justify-content: space-between;
-  background-color: #2f2f2f;
+  background-color: hsl(0, 0%, 18%);
   padding: 6px;
   color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.movie:hover {
+  opacity: 0.7;
 }
 
 .movie__info {
@@ -20,6 +26,7 @@
   min-width: 220px;
   max-width: 220px;
   min-height: 122px;
+  max-height: 122px;
 }
 
 .movie__title {
@@ -51,6 +58,7 @@
   background-color: inherit;
   cursor: pointer;
   transition: opacity 1s linear;
+  z-index: 100;
 }
 
 .movie__dislike-button {
@@ -108,7 +116,8 @@
     justify-content: space-between;
   }
 
-  .movie__like-button {
+  .movie__like-button,
+  .movie__like-button-empty {
     margin-top: 2px;
     margin-right: 4px;
   }
